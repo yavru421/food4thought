@@ -5,6 +5,7 @@ from image_analysis import analyze_meal_image
 from nutrition_report import generate_nutrition_report
 import datetime
 import os
+import time
 from dotenv import load_dotenv
 import logging
 from typing import List
@@ -295,11 +296,11 @@ def main():
                     "Raw Model Output": [False, False, False, True, False, False],
                     "Settings & Feedback": [False, False, False, False, True, False],
                     "Help & Outline": [False, False, False, False, False, True],
-                }.get(tab, [True, False, False, False, False, False])
-            # Animate tab transitions by toggling tab-anim class
-            import time
+                }.get(tab, [True, False, False, False, False, False])            # Animate tab transitions by toggling tab-anim class
             time.sleep(0.15)
-            return [gr.update(visible=vis[0]), gr.update(visible=vis[1]), gr.update(visible=vis[2]), gr.update(visible=vis[3]), gr.update(visible=vis[4]), gr.update(visible=vis[5])]        # Always connect nav_tabs.change inside the Blocks context
+            return [gr.update(visible=vis[0]), gr.update(visible=vis[1]), gr.update(visible=vis[2]), gr.update(visible=vis[3]), gr.update(visible=vis[4]), gr.update(visible=vis[5])]
+        
+        # Always connect nav_tabs.change inside the Blocks context
         nav_tabs.change(fn=nav_to_group, inputs=[nav_tabs, onboarding_state], outputs=[calendar_group, meal_group, history_group, raw_group, settings_group, help_group])
         
         # --- Event Handlers ---
