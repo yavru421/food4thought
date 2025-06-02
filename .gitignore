@@ -83,7 +83,7 @@ ENV/
 
 # Ignore non-essential files for deployment
 LICENSE
-.gitignore
+
 
 # Hugging Face Spaces compatibility
 application.log
