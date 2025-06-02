@@ -3,7 +3,7 @@
 
 title: Meal Nutrition Analyzer
 sdk: gradio
-python_version: 3.9
+python_version: 3.11
 app_file: app.py
 
 # Optional: set a custom port or other env vars
