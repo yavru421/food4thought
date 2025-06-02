@@ -86,6 +86,5 @@ LICENSE
 .gitignore
 
 # Hugging Face Spaces compatibility
-app.py
 application.log
 __pycache__/
