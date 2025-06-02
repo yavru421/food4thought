@@ -156,9 +156,7 @@ def main():
     onboarding_state = gr.State({"shown": False})
     with gr.Blocks(css=css, fill_width=True) as demo:
         # --- Onboarding Modal ---
-        onboarding_modal = gr.Group(visible=True, elem_classes=["onboarding-modal"])
-        main_window = gr.Group(visible=False, elem_classes=["main-window"])
-        with onboarding_modal:
+        with gr.Group(visible=True, elem_classes=["onboarding-modal"]) as onboarding_modal:
             gr.Image(value="https://cdn-icons-png.flaticon.com/512/3075/3075977.png", elem_classes=["logo"], show_label=False, show_download_button=False, show_share_button=False)
             gr.Markdown("""
             # 👋 Welcome to Meal Nutrition Analyzer
@@ -181,7 +179,8 @@ def main():
             ], label="Main Goal", value="Lose Weight")
             onboarding_submit = gr.Button("Get Started!", variant="primary")
 
-        with main_window:
+        # --- Main Application Window ---
+        with gr.Group(visible=False, elem_classes=["main-window"]) as main_window:
             # --- Main Layout: Sidebar + Tabs ---
             with gr.Row():
                 with gr.Column(scale=1, min_width=260):
@@ -300,12 +299,35 @@ def main():
             # Animate tab transitions by toggling tab-anim class
             import time
             time.sleep(0.15)
-            return [gr.update(visible=vis[0]), gr.update(visible=vis[1]), gr.update(visible=vis[2]), gr.update(visible=vis[3]), gr.update(visible=vis[4]), gr.update(visible=vis[5])]
-        # Always connect nav_tabs.change inside the Blocks context
+            return [gr.update(visible=vis[0]), gr.update(visible=vis[1]), gr.update(visible=vis[2]), gr.update(visible=vis[3]), gr.update(visible=vis[4]), gr.update(visible=vis[5])]        # Always connect nav_tabs.change inside the Blocks context
         nav_tabs.change(fn=nav_to_group, inputs=[nav_tabs, onboarding_state], outputs=[calendar_group, meal_group, history_group, raw_group, settings_group, help_group])
+        
+        # --- Event Handlers ---
+        # Meal analysis submit handler
+        submit_button.click(
+            fn=process_images,
+            inputs=[images, api_key_box, meal_type, manual_date, manual_foods, nutrient_goals],
+            outputs=[output, raw_output, history_output]
+        )
+        
+        # Download report handler  
+        download_btn.click(
+            fn=download_report,
+            inputs=[output],
+            outputs=[gr.File()]
+        )
+        
         # Onboarding logic: hide onboarding, show main window
+        def onboarding_complete(tone, goal, state):
+            print(f"Onboarding complete: tone={tone}, goal={goal}")
+            return (
+                gr.update(visible=False),  # Hide onboarding modal
+                gr.update(visible=True),   # Show main window
+                {**state, "shown": True, "tone": tone, "goal": goal}  # Update state
+            )
+        
         onboarding_submit.click(
-            fn=lambda tone, goal, state: (gr.update(visible=False), gr.update(visible=True), {**state, "shown": True, "tone": tone, "goal": goal}),
+            fn=onboarding_complete,
             inputs=[user_tone, user_goal, onboarding_state],
             outputs=[onboarding_modal, main_window, onboarding_state],
             queue=False
