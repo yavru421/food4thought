@@ -70,6 +70,13 @@ Thumbs.db
 context/
 compound_beta_playground.ipynb
 
+gradio_ui.md
+
+# Ignore virtual environments
+venv/
+.venv/
+ENV/
+
 # Ignore test artifacts
 *.tmp
 *.bak
@@ -77,3 +84,8 @@ compound_beta_playground.ipynb
 # Ignore non-essential files for deployment
 LICENSE
 .gitignore
+
+# Hugging Face Spaces compatibility
+app.py
+application.log
+__pycache__/

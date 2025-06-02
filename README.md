@@ -51,6 +51,18 @@ python src/app.py
 
 This will start the Gradio interface, which you can access in your web browser.
 
+## Hugging Face Spaces Deployment Instructions
+
+To deploy on Hugging Face Spaces:
+
+1. Push this repo to your Hugging Face account or link it in the Spaces UI.
+2. Set your `GROQ_API_KEY` as a secret or environment variable in the Spaces settings (or edit `.huggingface.yaml` if you want to hardcode it).
+3. Spaces will auto-detect `src/app.py` as the Gradio entry point.
+4. All logs, cache, and non-essential files are excluded for security and performance.
+5. For best results, use the latest Gradio version and Python 3.10+.
+
+---
+
 ## Contributing
 
 Contributions are welcome! If you have suggestions for improvements or new features, please open an issue or submit a pull request.

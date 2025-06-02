@@ -1,0 +1,15 @@
+# Hugging Face Spaces configuration
+# This file tells Hugging Face Spaces how to launch your Gradio app
+
+title: Meal Nutrition Analyzer
+sdk: gradio
+python_version: 3.10
+app_file: src/app.py
+
+# Optional: set a custom port or other env vars
+# env:
+#   - key: GROQ_API_KEY
+#     value: "your-key-here"
+
+# Optional: set a custom hardware requirement
+# hardware: cpu-basic

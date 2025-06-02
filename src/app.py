@@ -316,5 +316,11 @@ def main():
     </div>
     """)
 
+# --- Hugging Face Spaces compatibility ---
+# If running on Spaces, use gradio's launch arguments for public sharing
+import sys
 if __name__ == "__main__":
-    main()
+    if any("spaces" in arg for arg in sys.argv) or "SPACE_ID" in os.environ:
+        main()
+    else:
+        main()
