@@ -13,3 +13,7 @@ app_file: src/app.py
 
 # Optional: set a custom hardware requirement
 # hardware: cpu-basic
+
+# Optional: install system packages (uncomment if needed for TTS/audio)
+system_packages:
+  - ffmpeg
