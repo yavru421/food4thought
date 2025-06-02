@@ -1,72 +1,29 @@
-# Meal Nutrition Gradio App
+---
+title: "Meal Nutrition Analyzer"
+description: "A Gradio app for meal image analysis and nutrition reporting. Upload meal images, get instant nutrition insights, and track your progress!"
+emoji: "🥗"
+colorFrom: "green"
+colorTo: "purple"
+sdk: gradio
+python_version: 3.10
+app_file: src/app.py
+license: mit
+---
 
-This project is a Gradio application designed for meal image analysis and nutritional insights. It leverages the Groq API to provide advanced image analysis and generate detailed nutritional reports based on the analyzed data.
+A hackathon-ready Gradio app for meal image analysis and nutrition reporting. Upload meal images, get instant nutrition insights, and track your nutrition journey with gamification and analytics.
 
-## Project Structure
-
-```
-meal-nutrition-gradio-app
-├── src
-│   ├── app.py                # Entry point of the Gradio application
-│   ├── groq_client.py        # Handles Groq API client initialization and calls
-│   ├── image_analysis.py      # Functions for processing meal images
-│   ├── nutrition_report.py    # Generates nutritional reports from analysis results
-│   ├── utils.py              # Utility functions for various operations
-│   └── types
-│       └── index.py          # Type definitions and interfaces
-├── requirements.txt          # Project dependencies
-└── README.md                 # Project documentation
-```
-
-## Features
-
-- **Image Analysis**: Upload a meal image to receive detailed analysis, including ingredient recognition and portion sizes.
-- **Nutritional Insights**: Get a comprehensive nutritional report based on the analysis, including calorie count, macronutrient breakdown, and more.
-- **User-Friendly Interface**: The application is built using Gradio, providing an intuitive interface for users to interact with.
-
-## Installation
-
-To set up the project, follow these steps:
-
-1. Clone the repository:
-   ```
-   git clone <repository-url>
-   cd meal-nutrition-gradio-app
-   ```
-
-2. Install the required dependencies:
-   ```
-   pip install -r requirements.txt
-   ```
-
-3. Set up your Groq API key in the environment variables or directly in the `groq_client.py` file.
+- **Image Analysis**: Upload meal images for AI-powered nutrition breakdowns.
+- **Nutrition Reports**: Get calories, macros, and more.
+- **Gamification**: Streaks, badges, and progress tracking.
+- **Accessibility**: Designed for all users.
+- **Open Source**: [GitHub](https://github.com/John2121/food4thought)
 
 ## Usage
 
-To run the application, execute the following command:
+- Click "Open in Spaces" to launch the app.
+- Enter your own Groq API key when prompted (for privacy/security).
+- Enjoy nutrition insights and progress tracking!
 
-```
-python src/app.py
-```
+## Hackathon Submission
 
-This will start the Gradio interface, which you can access in your web browser.
-
-## Hugging Face Spaces Deployment Instructions
-
-To deploy on Hugging Face Spaces:
-
-1. Push this repo to your Hugging Face account or link it in the Spaces UI.
-2. Set your `GROQ_API_KEY` as a secret or environment variable in the Spaces settings (or edit `.huggingface.yaml` if you want to hardcode it).
-3. Spaces will auto-detect `src/app.py` as the Gradio entry point.
-4. All logs, cache, and non-essential files are excluded for security and performance.
-5. For best results, use the latest Gradio version and Python 3.10+.
-
----
-
-## Contributing
-
-Contributions are welcome! If you have suggestions for improvements or new features, please open an issue or submit a pull request.
-
-## License
-
-This project is licensed under the MIT License. See the LICENSE file for more details.
+- All requirements met: open source, Gradio UI, public repo, no secrets in code, modern UX, and ready for Spaces.
