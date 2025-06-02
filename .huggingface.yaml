@@ -21,7 +21,3 @@ system_packages:
 # Add requirements.txt to ensure dependencies are installed
 dependencies:
   - requirements.txt
-
-# Add Dockerfile to use a custom build environment
-docker:
-  file: Dockerfile
