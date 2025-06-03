@@ -3,6 +3,12 @@ import os
 from PIL import Image
 import io
 import base64
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+logger.info("Starting Meal Nutrition Analyzer app")
 
 # Configure page
 st.set_page_config(
@@ -183,9 +189,10 @@ with col2:
         else:
             with st.spinner("Analyzing meal..."):
                 # Analyze image
+                image = Image.open(uploaded_file)  # Ensure image is defined
                 analysis_result = analyze_image(image, api_key, nutrition_focus)
                 
-                if "error" in analysis_result.lower():
+                if analysis_result and "error" in analysis_result.lower():
                     st.error(analysis_result)
                 else:
                     # Generate nutrition report
