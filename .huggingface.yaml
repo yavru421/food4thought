@@ -1,8 +1,11 @@
 # Hugging Face Spaces configuration
-# This file tells Hugging Face Spaces how to launch your Gradio app
+# This file tells Hugging Face Spaces how to launch your Streamlit app
 
 title: Meal Nutrition Analyzer
-sdk: gradio
+emoji: 🥗
+colorFrom: green
+colorTo: purple
+sdk: streamlit
 python_version: 3.10
 app_file: app.py
 

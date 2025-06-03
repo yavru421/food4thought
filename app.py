@@ -1,208 +1,217 @@
-import gradio as gr
+import streamlit as st
 import os
-from dotenv import load_dotenv
-import logging
 from PIL import Image
-from image_analysis import analyze_meal_image
-from nutrition_report import generate_nutrition_report
+import io
+import base64
 
-# Load environment variables
-load_dotenv()
+# Configure page
+st.set_page_config(
+    page_title="Meal Nutrition Analyzer",
+    page_icon="🥗",
+    layout="centered"
+)
 
-# Configure logging
-logging.basicConfig(level=logging.INFO)
+# Apply custom CSS
+st.markdown("""
+<style>
+    .main {
+        background-color: #f8f9fa;
+        padding: 20px;
+    }
+    .title-container {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 20px;
+        border-radius: 10px;
+        color: white;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .content-section {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+    }
+    .stButton button {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        font-weight: bold;
+        width: 100%;
+    }
+</style>
+""", unsafe_allow_html=True)
 
-# Simple CSS for a clean single page
-css = """
-.gradio-container {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-}
-.header {
-    text-align: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 30px;
-    border-radius: 15px;
-    margin-bottom: 30px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-}
-.section {
-    background: white;
-    padding: 25px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-    border-left: 4px solid #667eea;
-}
-.result-box {
-    background: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-    border: 1px solid #e9ecef;
-    margin-top: 15px;
-}
-button {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-    border: none !important;
-    color: white !important;
-    padding: 12px 24px !important;
-    border-radius: 8px !important;
-    font-weight: 600 !important;
-    transition: all 0.3s ease !important;
-}
-button:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4) !important;
-}
-"""
+# Header
+st.markdown("""
+<div class="title-container">
+    <h1>🥗 Meal Nutrition Analyzer</h1>
+    <p>Upload meal photos and get instant nutrition analysis!</p>
+</div>
+""", unsafe_allow_html=True)
 
-def analyze_meal(image, api_key, nutrition_focus, health_goal):
-    """Simple meal analysis function"""
-    if not api_key or api_key.strip() == "":
-        return "❌ Please enter your Groq API key to analyze meals."
-    
-    if image is None:
-        return "❌ Please upload an image of your meal."
-    
+# Define functions for image analysis
+def analyze_image(image, api_key, nutrition_focus):
+    """Analyze the meal image with Groq API"""
     try:
-        # Analyze the image
-        logging.info(f"Analyzing meal with focus: {nutrition_focus}, goal: {health_goal}")
+        import groq
         
-        # Get the image analysis
-        analysis_result = analyze_meal_image(image, api_key, nutrition_focus)
+        # Convert image to base64
+        buffered = io.BytesIO()
+        image.save(buffered, format="JPEG")
+        img_str = base64.b64encode(buffered.getvalue()).decode()
         
-        if "error" in analysis_result.lower():
-            return f"❌ Analysis Error: {analysis_result}"
+        # Set up Groq client
+        client = groq.Groq(api_key=api_key)
         
-        # Generate nutrition report
-        nutrition_report = generate_nutrition_report(
-            analysis_result, 
-            nutrition_focus, 
-            health_goal, 
-            api_key
+        # Send the image for analysis
+        response = client.chat.completions.create(
+            model="llama-4-scout-17b-16e-instruct",
+            messages=[
+                {
+                    "role": "user", 
+                    "content": [
+                        {"type": "text", "text": f"Analyze this food image. Provide detailed information about what food is in the image, ingredients, and approximate portion sizes. Focus on {nutrition_focus} nutrition aspects."},
+                        {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{img_str}"}}
+                    ]
+                }
+            ],
+            max_tokens=500
         )
         
-        if "error" in nutrition_report.lower():
-            return f"❌ Report Error: {nutrition_report}"
+        return response.choices[0].message.content
+    except Exception as e:
+        return f"Error analyzing image: {str(e)}"
+
+def generate_nutrition_report(analysis, nutrition_focus, health_goal, api_key):
+    """Generate nutrition report based on analysis"""
+    try:
+        import groq
         
-        # Format the complete result
-        result = f"""
-## 🥗 Meal Analysis Complete!
-
-### 📸 Image Analysis
-{analysis_result}
-
----
-
-### 📊 Nutrition Report
-{nutrition_report}
-
----
-
-*Analysis completed with {nutrition_focus} focus for {health_goal} goal.*
+        # Set up Groq client
+        client = groq.Groq(api_key=api_key)
+        
+        # Create a prompt for nutrition analysis
+        prompt = f"""
+        Based on this meal analysis:
+        "{analysis}"
+        
+        Generate a detailed nutrition report with:
+        1. Estimated calories
+        2. Macronutrient breakdown (protein, carbs, fat)
+        3. Key vitamins and minerals
+        4. Recommendations based on "{nutrition_focus}" focus and "{health_goal}" health goal
+        5. Suggestions for improvement
+        
+        Format your response in clear sections.
         """
         
-        return result
+        # Get nutrition report
+        response = client.chat.completions.create(
+            model="llama-4-scout-17b-16e-instruct",
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=800
+        )
         
+        return response.choices[0].message.content
     except Exception as e:
-        logging.error(f"Error in analyze_meal: {str(e)}")
-        return f"❌ Unexpected error: {str(e)}"
+        return f"Error generating nutrition report: {str(e)}"
 
-# Create the Gradio interface
-with gr.Blocks(css=css, title="🥗 Meal Nutrition Analyzer") as demo:
-    gr.HTML("""
-    <div class="header">
-        <h1>🥗 Meal Nutrition Analyzer</h1>
-        <p>Upload your meal photos and get instant AI-powered nutrition analysis!</p>
-    </div>
-    """)
+# Create two main columns with different widths
+col1, col2 = st.columns([1, 2])
+
+# Left sidebar - Settings
+with col1:
+    st.markdown('<div class="content-section">', unsafe_allow_html=True)
     
-    with gr.Row():
-        with gr.Column(scale=1):
-            gr.HTML('<div class="section">')
-            gr.Markdown("## 🔑 Setup")
-            api_key = gr.Textbox(
-                label="Groq API Key",
-                placeholder="Enter your Groq API key here...",
-                type="password",
-                info="Get your free API key at console.groq.com/keys"
-            )
-            
-            gr.Markdown("## 🎯 Preferences")
-            nutrition_focus = gr.Radio(
-                choices=[
-                    "Weightwatching",
-                    "Diet Restrictions", 
-                    "Adolescent Diet",
-                    "Keto",
-                    "Athlete/High Protein",
-                    "Plant-Based/Vegan"
-                ],
-                label="Nutrition Focus",
-                value="Weightwatching"
-            )
-            
-            health_goal = gr.Radio(
-                choices=[
-                    "Lose Weight",
-                    "Gain Muscle", 
-                    "More Energy",
-                    "Better Sleep",
-                    "Lower Blood Sugar"
-                ],
-                label="Health Goal",
-                value="Lose Weight"
-            )
-            gr.HTML('</div>')
-        
-        with gr.Column(scale=2):
-            gr.HTML('<div class="section">')
-            gr.Markdown("## 📸 Upload Your Meal")
-            image_input = gr.Image(
-                label="Meal Photo",
-                type="pil",
-                sources=["upload", "webcam"],
-                height=300
-            )
-            
-            analyze_btn = gr.Button(
-                "🔍 Analyze Meal", 
-                variant="primary",
-                size="lg"
-            )
-            gr.HTML('</div>')
+    # API Key input
+    st.subheader("🔑 Setup")
+    api_key = st.text_input("Groq API Key", type="password", help="Get your free API key at console.groq.com/keys")
+    
+    # Nutrition preferences
+    st.subheader("🎯 Preferences")
+    nutrition_focus = st.radio(
+        "Nutrition Focus",
+        options=[
+            "Weightwatching",
+            "Diet Restrictions",
+            "Adolescent Diet",
+            "Keto",
+            "Athlete/High Protein",
+            "Plant-Based/Vegan"
+        ]
+    )
+    
+    health_goal = st.radio(
+        "Health Goal",
+        options=[
+            "Lose Weight",
+            "Gain Muscle",
+            "More Energy",
+            "Better Sleep", 
+            "Lower Blood Sugar"
+        ]
+    )
+    
+    st.markdown('</div>', unsafe_allow_html=True)
+
+# Right side - Image upload and results
+with col2:
+    # Image upload section
+    st.markdown('<div class="content-section">', unsafe_allow_html=True)
+    st.subheader("📸 Upload Your Meal")
+    uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+    
+    # Display uploaded image
+    if uploaded_file is not None:
+        image = Image.open(uploaded_file)
+        st.image(image, caption="Uploaded meal image", use_column_width=True)
+    
+    analyze_button = st.button("🔍 Analyze Meal")
+    st.markdown('</div>', unsafe_allow_html=True)
     
     # Results section
-    gr.HTML('<div class="section">')
-    gr.Markdown("## 📊 Analysis Results")
-    result_output = gr.Markdown(
-        value="Upload a meal photo and click 'Analyze Meal' to get started!",
-        elem_classes=["result-box"]
-    )
-    gr.HTML('</div>')
+    st.markdown('<div class="content-section">', unsafe_allow_html=True)
+    st.subheader("📊 Analysis Results")
     
-    # Connect the analyze button
-    analyze_btn.click(
-        fn=analyze_meal,
-        inputs=[image_input, api_key, nutrition_focus, health_goal],
-        outputs=[result_output]
-    )
+    # Process image when button is clicked
+    if analyze_button:
+        if not api_key:
+            st.error("❌ Please enter your Groq API key to analyze meals.")
+        elif uploaded_file is None:
+            st.error("❌ Please upload an image of your meal.")
+        else:
+            with st.spinner("Analyzing meal..."):
+                # Analyze image
+                analysis_result = analyze_image(image, api_key, nutrition_focus)
+                
+                if "error" in analysis_result.lower():
+                    st.error(analysis_result)
+                else:
+                    # Generate nutrition report
+                    with st.spinner("Generating nutrition report..."):
+                        nutrition_report = generate_nutrition_report(analysis_result, nutrition_focus, health_goal, api_key)
+                    
+                    # Display results
+                    st.markdown("### 📸 Image Analysis")
+                    st.write(analysis_result)
+                    
+                    st.markdown("---")
+                    
+                    st.markdown("### 📊 Nutrition Report")
+                    st.write(nutrition_report)
+                    
+                    st.markdown("---")
+                    
+                    st.info(f"*Analysis completed with {nutrition_focus} focus for {health_goal} goal.*")
+    else:
+        st.info("Upload a meal photo and click 'Analyze Meal' to get started!")
     
-    # Footer
-    gr.HTML("""
-    <div style="text-align: center; margin-top: 40px; padding: 20px; color: #666;">
-        <p>Made with ❤️ using Groq AI • <a href="https://github.com/yavru421/food4thought" target="_blank">GitHub</a></p>
-    </div>
-    """)
+    st.markdown('</div>', unsafe_allow_html=True)
 
-if __name__ == "__main__":
-    # Launch configuration for both local and Hugging Face Spaces
-    demo.launch(
-        share=False,
-        server_name="0.0.0.0" if "SPACE_ID" in os.environ else "127.0.0.1",
-        server_port=7860,
-        show_error=True
-    )
+# Footer
+st.markdown("""
+<div style="text-align: center; margin-top: 30px; padding: 10px; color: #666;">
+    <p>Made with ❤️ using Groq AI</p>
+</div>
+""", unsafe_allow_html=True)
