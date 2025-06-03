@@ -1,9 +1,14 @@
-# Python
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+
+# C extensions
 *.so
+
+# Distribution / packaging
 .Python
+env/
 build/
 develop-eggs/
 dist/
@@ -15,6 +20,7 @@ lib64/
 parts/
 sdist/
 var/
+<<<<<<< HEAD
 wheels/
 *.egg-info/
 .installed.cfg
@@ -50,11 +56,51 @@ venv.bak/
 .Trashes
 ehthumbs.db
 Thumbs.db
+=======
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# VS Code
+.vscode/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+
+# dotenv
+.env
+.env.*
+>>>>>>> 36ac2fd86ff0452325700d0da11e6cc95aafcebd
 
 # Logs
 *.log
 application.log
 
+<<<<<<< HEAD
 # Temporary files
 *.tmp
 *.temp
@@ -73,3 +119,32 @@ flagged/
 *.csv
 *.json
 nutrition_report_*.txt
+=======
+# OS files
+.DS_Store
+Thumbs.db
+
+# Ignore context and playground files
+context/
+compound_beta_playground.ipynb
+
+gradio_ui.md
+
+# Ignore virtual environments
+venv/
+.venv/
+ENV/
+
+# Ignore test artifacts
+*.tmp
+*.bak
+
+# Ignore non-essential files for deployment
+LICENSE
+.gitignore
+
+# Hugging Face Spaces compatibility
+app.py
+application.log
+__pycache__/
+>>>>>>> 36ac2fd86ff0452325700d0da11e6cc95aafcebd

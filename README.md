@@ -1,6 +1,6 @@
 # 🥗 Meal Nutrition Analyzer
 
-An AI-powered nutrition analysis tool that analyzes meal images and provides detailed nutritional information using Groq's vision models.
+A Gradio app for meal image analysis and nutrition reporting. Upload meal images, get instant nutrition insights, and track your progress!
 
 ![Meal Nutrition Analyzer](image(14).jpg)
 
@@ -15,8 +15,8 @@ An AI-powered nutrition analysis tool that analyzes meal images and provides det
 
 ## 🚀 Live Demo
 
-- **Hugging Face Spaces**: [Coming Soon]
-- **GitHub Repository**: [https://github.com/YourUsername/meal-nutrition-analyzer](https://github.com/YourUsername/meal-nutrition-analyzer)
+- **Hugging Face Spaces**: [food4thought](https://huggingface.co/spaces/yavru421/food4thought)
+- **GitHub Repository**: [https://github.com/yavru421/food4thought](https://github.com/yavru421/food4thought)
 
 ## 🛠️ Setup & Installation
 
@@ -142,6 +142,58 @@ The app is configured to work on Hugging Face Spaces with zero configuration nee
 ### Local Development
 ```bash
 python app.py
+```
+
+## Usage
+
+1. **Setup**: Enter your Groq API key and select your nutrition preferences
+2. **Upload**: Take or upload photos of your meals
+3. **Analyze**: Get detailed nutritional analysis powered by AI
+4. **Track**: Review your nutrition history and progress
+5. **Improve**: Get personalized recommendations
+
+## 🔧 Configuration
+
+### Nutrition Focus Options
+- **Weightwatching**: Calorie-focused analysis
+- **Diet Restrictions**: Allergen and restriction awareness
+- **Adolescent Diet**: Teen-specific nutrition needs
+- **Keto**: Low-carb, high-fat focus
+- **Athlete/High Protein**: Performance nutrition
+- **Plant-Based/Vegan**: Plant-based nutrition analysis
+
+### Health Goals
+- Lose Weight
+- Gain Muscle
+- More Energy
+- Better Sleep
+- Lower Blood Sugar
+
+## 🏗️ Architecture
+
+- **Frontend**: Gradio web interface
+- **AI Vision**: Groq LLaMA-Vision models
+- **Text Generation**: Groq Compound-Beta
+- **Audio**: Groq TTS (Text-to-Speech)
+- **Data**: Local session storage
+
+## 🔑 API Keys
+
+This app requires a Groq API key for AI functionality:
+
+1. Visit [console.groq.com/keys](https://console.groq.com/keys)
+2. Create a free account
+3. Generate an API key
+4. Enter it in the app's welcome screen
+
+## 🚀 Deployment
+
+### Hugging Face Spaces
+The app is configured to work on Hugging Face Spaces with zero configuration needed.
+
+### Local Development
+```bash
+python src/app.py
 ```
 
 ---
