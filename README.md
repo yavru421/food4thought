@@ -10,6 +10,8 @@ app_file: app.py
 license: mit
 ---
 
+<!-- Updated: 2025-06-03 -->
+
 A hackathon-ready Gradio app for meal image analysis and nutrition reporting. Upload meal images, get instant nutrition insights, and track your nutrition journey with gamification and analytics.
 
 - **Image Analysis**: Upload meal images for AI-powered nutrition breakdowns.
