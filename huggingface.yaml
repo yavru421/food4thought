@@ -1,0 +1,7 @@
+title: Meal Nutrition Analyzer
+emoji: 🥗
+colorFrom: green
+colorTo: purple
+sdk: gradio
+python_version: 3.10
+app_file: app_standalone.py
