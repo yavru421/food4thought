@@ -1,10 +1,2 @@
 gradio
-requests
 Pillow
-numpy
-opencv-python
-python-dotenv
-loguru
-groq
-# For Groq API usage
-plotly

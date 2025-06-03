@@ -4,4 +4,4 @@ colorFrom: green
 colorTo: purple
 sdk: gradio
 python_version: 3.10
-app_file: app_standalone.py
+app_file: super_simple_app.py
