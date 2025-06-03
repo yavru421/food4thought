@@ -158,7 +158,7 @@ def main():
     with gr.Blocks(css=css, fill_width=True) as demo:
         # --- Onboarding Modal ---
         with gr.Group(visible=True, elem_classes=["onboarding-modal"]) as onboarding_modal:
-            gr.Image(value="https://cdn-icons-png.flaticon.com/512/706/706164.png", elem_classes=["logo"], show_label=False, show_download_button=False, show_share_button=False)
+            gr.Image(value="https://cdn-icons-png.flaticon.com/512/2909/2909760.png", elem_classes=["logo"], show_label=False, show_download_button=False, show_share_button=False)
             gr.Markdown("""
             # 🥗 Welcome to Meal Nutrition Analyzer
             Let's personalize your experience! Please set your preferred tone and main goal for your nutrition journey.
