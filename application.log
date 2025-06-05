@@ -1,0 +1,30 @@
+2025-06-04 22:49:44,285 - INFO - Application started.
+2025-06-04 22:49:44,291 - INFO - Creating virtual environment...
+2025-06-04 22:49:47,999 - ERROR - Failed to create or activate virtual environment: Command '['C:\\Users\\John\\Desktop\\FFC\\food\\venv\\Scripts\\groqrunner.exe', '-m', 'ensurepip', '--upgrade', '--default-pip']' returned non-zero exit status 1.
+2025-06-04 22:49:57,621 - INFO - User message: ///refactor app.py
+2025-06-04 22:49:57,625 - DEBUG - Starting new HTTPS connection (1): api.groq.com:443
+2025-06-04 22:50:02,360 - DEBUG - https://api.groq.com:443 "POST /openai/v1/chat/completions HTTP/1.1" 200 None
+2025-06-04 22:50:02,542 - INFO - Groq response received using model llama-3.3-70b-versatile [Response length: 4978]
+2025-06-04 22:50:52,477 - INFO - Application started.
+2025-06-04 22:50:52,481 - ERROR - Failed to create or activate virtual environment: Activate script not found.
+2025-06-04 22:51:01,202 - INFO - User message: ///refactor app.py
+2025-06-04 22:51:01,206 - DEBUG - Starting new HTTPS connection (1): api.groq.com:443
+2025-06-04 22:51:06,219 - DEBUG - https://api.groq.com:443 "POST /openai/v1/chat/completions HTTP/1.1" 200 None
+2025-06-04 22:51:06,381 - INFO - Groq response received using model llama-3.3-70b-versatile [Response length: 5480]
+2025-06-04 22:51:29,222 - INFO - User message: ///debug app.py
+2025-06-04 22:51:29,223 - DEBUG - Starting new HTTPS connection (1): api.groq.com:443
+2025-06-04 22:51:35,512 - DEBUG - https://api.groq.com:443 "POST /openai/v1/chat/completions HTTP/1.1" 200 None
+2025-06-04 22:51:35,516 - INFO - Groq response received using model llama-3.3-70b-versatile [Response length: 6593]
+2025-06-04 23:26:29,801 - INFO - Application started.
+2025-06-04 23:26:29,805 - INFO - Virtual environment activated.
+2025-06-04 23:26:40,840 - INFO - User message: ///refactor huggingface.yaml
+2025-06-04 23:26:59,888 - INFO - User message: ///refactor .huggingface.yaml
+2025-06-04 23:26:59,891 - DEBUG - Starting new HTTPS connection (1): api.groq.com:443
+2025-06-04 23:27:00,740 - DEBUG - https://api.groq.com:443 "POST /openai/v1/chat/completions HTTP/1.1" 200 None
+2025-06-04 23:27:00,741 - INFO - Groq response received using model llama-3.3-70b-versatile [Response length: 368]
+2025-06-04 23:40:03,664 - INFO - Application started.
+2025-06-04 23:40:03,669 - INFO - Virtual environment activated.
+2025-06-04 23:40:15,456 - INFO - User message: ///debug app.py
+2025-06-04 23:40:15,472 - DEBUG - Starting new HTTPS connection (1): api.groq.com:443
+2025-06-04 23:40:21,733 - DEBUG - https://api.groq.com:443 "POST /openai/v1/chat/completions HTTP/1.1" 200 None
+2025-06-04 23:40:21,742 - INFO - Groq response received using model llama-3.3-70b-versatile [Response length: 6746]

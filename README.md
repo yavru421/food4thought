@@ -1,31 +1,17 @@
+# Meal Nutrition Analyzer (Gradio Template)
+
+A minimal Gradio app for meal nutrition analysis using Groq Vision API (Maverick/Scout models).
+
+## Features
+- Upload meal images
+- Select vision model
+- Get a nutrition report (placeholder)
+
+## How to run
+```bash
+pip install -r requirements.txt
+python app.py
+```
+
 ---
-title: "Meal Nutrition Analyzer"
-description: "A Gradio app for meal image analysis and nutrition reporting. Upload meal images, get instant nutrition insights, and track your progress!"
-emoji: "🥗"
-colorFrom: "green"
-colorTo: "purple"
-sdk: gradio
-python_version: 3.10
-app_file: app.py
-license: mit
----
-
-<!-- Updated: 2025-06-03 -->
-
-A hackathon-ready Gradio app for meal image analysis and nutrition reporting. Upload meal images, get instant nutrition insights, and track your nutrition journey with gamification and analytics.
-
-- **Image Analysis**: Upload meal images for AI-powered nutrition breakdowns.
-- **Nutrition Reports**: Get calories, macros, and more.
-- **Gamification**: Streaks, badges, and progress tracking.
-- **Accessibility**: Designed for all users.
-- **Open Source**: [GitHub](https://github.com/John2121/food4thought)
-
-## Usage
-
-- Click "Open in Spaces" to launch the app.
-- Enter your own Groq API key when prompted (for privacy/security).
-- Enjoy nutrition insights and progress tracking!
-
-## Hackathon Submission
-
-- All requirements met: open source, Gradio UI, public repo, no secrets in code, modern UX, and ready for Spaces.
+No burgers. No onboarding. No bloat. Just a clean Gradio app.

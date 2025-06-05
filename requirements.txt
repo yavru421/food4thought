@@ -1,11 +1,4 @@
 gradio
-requests
-Pillow
-numpy
-opencv-python
-python-dotenv
-loguru
 groq
-plotly
-huggingface_hub>=0.23.0
-transformers>=4.40.0
+matplotlib
+Pillow
